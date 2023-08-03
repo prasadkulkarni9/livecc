@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Live Currency Converter By Professor</title>
+    <link rel="icon" href="img/im2.png"/>
+    <style>
+    *{ font-size:50px ;}
+    body{background-color: lightcoral;}
+    h1{background-color: blueviolet;width: 50%;border-radius: 30px;}
+    h2{background-color: rgb(255, 255, 4);color: red;width: 30%;border-radius: 30px;}
+    input{background-color: rgb(194, 250, 250);color: red;border-radius: 15px;}
+    body{background-image: url(img/bg2.png);}
+    </style>
+    <script>
+        function convert()
+        {
+            event.preventDefault();
+            let amt = document.getElementById("amt");
+            let ans = document.getElementById("ans");
+
+            if(amt.value=="")
+            {
+                alert("input is empty");
+                ans.innerHTML="";
+                amt.focus();
+                return;
+            }
+            let aid = parseFloat(amt.value);
+            let url = "https://api.exchangerate-api.com/v4/latest/USD";
+            let dollar = 0.0;
+            fetch(url)
+            .then((res)=>res.json())
+            .then(data=>{dollar=data.rates.INR; let air = aid*dollar;
+            let msg = "\u20B9" + air.toFixed(2); ans.innerHTML=msg;})
+           .catch(err=>{ans.innerHTML="issue"+err;});
+        }   
+    </script>
+</head>
+<body>
+<center>
+    <h1>Live Dollar To INR Converter</h1>
+    <form onsubmit="convert()">
+    <input type = "number" step="any"placeholder="Enter amount in $$" id="amt"/>
+    <br><br>
+    <input type="submit" value="Convert"/>
+    </form>
+    <h2 id="ans"></h2>
+</center>
+</body>
+</html>
